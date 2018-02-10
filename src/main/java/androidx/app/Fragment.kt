@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
+
 package androidx.app
 
 import android.app.Fragment
@@ -33,7 +35,7 @@ fun Fragment.commit(unit: FragmentTransaction.() -> Unit = {}) : Int =
  * @see FragmentTransaction.commitAllowingStateLoss
  */
 fun Fragment.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}) : Int =
-    fragmentManager.commit(unit)
+    fragmentManager.commitAllowingStateLoss(unit)
 
 /**
  * Commit a fragment transaction Now
@@ -41,7 +43,7 @@ fun Fragment.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}) 
  */
 @RequiresApi(Build.VERSION_CODES.N)
 fun Fragment.commitNow(unit: FragmentTransaction.() -> Unit = {}) =
-    fragmentManager.commit(unit)
+    fragmentManager.commitNow(unit)
 
 /**
  * Commit a fragment transaction Now Allowing State Loss
@@ -49,4 +51,4 @@ fun Fragment.commitNow(unit: FragmentTransaction.() -> Unit = {}) =
  */
 @RequiresApi(Build.VERSION_CODES.N)
 fun Fragment.commitNowAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}) =
-    fragmentManager.commit(unit)
+    fragmentManager.commitNowAllowingStateLoss(unit)
