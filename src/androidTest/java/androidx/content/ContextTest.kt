@@ -16,11 +16,13 @@
 
 package androidx.content
 
+import android.preference.PreferenceManager
 import android.support.test.InstrumentationRegistry
 import android.support.test.filters.SdkSuppress
 import android.test.mock.MockContext
 import androidx.getAttributeSet
 import androidx.kotlin.test.R
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -69,5 +71,10 @@ class ContextTest {
         context.withStyledAttributes(attrs, R.styleable.SampleAttrs, 0, 0) {
             assertTrue(getInt(R.styleable.SampleAttrs_sample, -1) != -1)
         }
+    }
+
+    @Test fun defaultSharedPreferences() {
+        Assert.assertNotNull(context.defaultSharedPreferences)
+        assertEquals(context.defaultSharedPreferences, PreferenceManager.getDefaultSharedPreferences(context))
     }
 }

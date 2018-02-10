@@ -17,7 +17,9 @@
 package androidx.content
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.TypedArray
+import android.preference.PreferenceManager
 import android.support.annotation.AttrRes
 import android.support.annotation.RequiresApi
 import android.support.annotation.StyleRes
@@ -91,3 +93,11 @@ inline fun Context.withStyledAttributes(
         typedArray.recycle()
     }
 }
+
+/**
+ * Get the default [SharedPreferences] using this context
+ *
+ * @see PreferenceManager.getDefaultSharedPreferences
+ */
+val Context.defaultSharedPreferences: SharedPreferences
+    get() = PreferenceManager.getDefaultSharedPreferences(this)
