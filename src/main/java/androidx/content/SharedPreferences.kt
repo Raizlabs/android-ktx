@@ -60,16 +60,16 @@ inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
  * throw [UnsupportedOperationException] if the preference type is not supported
  * throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
  */
-inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T =
+inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T? =
         when (T::class) {
-            String::class -> getString(key, defaultValue as? String) as T
+            String::class -> getString(key, defaultValue as? String) as? T
             Integer::class -> getInt(key, defaultValue as? Int ?: -1) as T
             Boolean::class -> getBoolean(key, defaultValue as? Boolean ?: false) as T
             Float::class -> getFloat(key, defaultValue as? Float ?: -1f) as T
             Long::class -> getLong(key, defaultValue as? Long ?: -1) as T
             Set::class -> {
                 @Suppress("UNCHECKED_CAST")
-                getStringSet(key, defaultValue as? Set<String>) as T
+                getStringSet(key, defaultValue as? Set<String>) as? T
             }
             else -> throw UnsupportedOperationException(T::class.java.simpleName +" is not supported  as preference type")
         }
