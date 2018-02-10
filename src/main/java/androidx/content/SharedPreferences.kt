@@ -57,8 +57,8 @@ inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
  * Long -> -1
  * Set<String> -> null
  *
- * throw [UnsupportedOperationException] if the preference type is not supported
- * throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
+ * @throw [UnsupportedOperationException] if the preference type is not supported
+ * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
  */
 inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T? =
         when (T::class) {
@@ -85,8 +85,8 @@ inline operator fun <reified T : Any> SharedPreferences.get(key: String, default
  *
  * sharedPreferences.set([key],[value])
  *
- * throw [UnsupportedOperationException] if the preference type is not supported
- * throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
+ * @throw [UnsupportedOperationException] if the preference type is not supported
+ * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
  */
 inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T) =
         when (T::class) {
