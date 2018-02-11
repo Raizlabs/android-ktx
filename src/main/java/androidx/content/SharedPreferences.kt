@@ -14,38 +14,46 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
+
 package androidx.content
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 
 /**
  * Allows editing of this preference instance with a call to
  * [SharedPreferences.Editor.apply] to persist the changes.
  *
- * ```
  * prefs.edit {
  *     putString("key", value)
+ *     myInteger = getInt("key2", 0)
+ *     [...]
  * }
- * ```
+ *
+ * @see SharedPreferences.apply
  */
-inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
-    val editor = edit()
-    action(editor)
-    editor.apply()
-}
+inline fun SharedPreferences.edit(unit: SharedPreferences.Editor.() -> Unit) =
+    edit().apply(unit).apply()
 
 /**
- * Simplify usage of [SharedPreferences]
+ *
+ * @see SharedPreferences.commit
+ */
+@SuppressLint("ApplySharedPref")
+inline fun SharedPreferences.commit(unit: SharedPreferences.Editor.() -> Unit) =
+    edit().apply(unit).commit()
+
+/**
+ * [SharedPreferences].[get] Kotlin Operator
  *
  * usages :
  *
+ *  val pref : Int = sharedPreferences[[key]] or
+ *
  *  val pref = sharedPreferences[[key], [defaultValue]] or
  *
- *  val pref = sharedPreferences.get<Int>([key]) or
- *
- *  val pref = sharedPreferences.get([key], [defaultValue])
- *
- *  val pref : Int = sharedPreferences[[key]]
+ *  val pref = sharedPreferences.get<Int>([key])
  *
  * if [defaultValue] is not specified or null the following values will be used,
  * depending of the preference type
@@ -58,8 +66,8 @@ inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
  * Set<String> -> null
  *
  * @throw [UnsupportedOperationException] if the preference type is not supported
- * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
- */
+ * @throw [ClassCastException] if the specified [Set] isn't a [Set] of [String]
+ * */
 inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null):
         T? = when (T::class) {
             String::class -> getString(key, defaultValue as? String) as? T
@@ -72,23 +80,17 @@ inline operator fun <reified T : Any> SharedPreferences.get(key: String, default
                 getStringSet(key, defaultValue as? Set<String>) as? T
             }
             else -> throw UnsupportedOperationException(T::class.java.simpleName +
-                    " is not supported  as preference type")
+                    " is not supported as preference type")
         }
 
 /**
- * Simplify usage of [SharedPreferences]
+ * [SharedPreferences].[put] Kotlin Operator
  *
- * usages :
- *
- * sharedPreferences[[key]] = [value] or
- *
- * sharedPreferences.set<Long>([key], [value]) or
- *
- * sharedPreferences.set([key], [value])
+ * usage : sharedPreferences[[key]] = [value]
  *
  * @throw [UnsupportedOperationException] if the preference type is not supported
- * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
- */
+ * @throw [ClassCastException] if the specified [Set] isn't a [Set] of [String]
+ * */
 inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T) =
     when (T::class) {
             String::class -> edit { putString(key, value as String) }
@@ -101,5 +103,5 @@ inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: 
                 edit { putStringSet(key, value as Set<String>) }
             }
             else -> throw UnsupportedOperationException(T::class.java.simpleName +
-                    " is not supported  as preference type")
-        }
+                    " is not supported as preference type")
+    }
