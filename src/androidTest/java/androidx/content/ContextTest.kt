@@ -75,6 +75,7 @@ class ContextTest {
 
     @Test fun defaultSharedPreferences() {
         Assert.assertNotNull(context.defaultSharedPreferences)
-        assertEquals(context.defaultSharedPreferences, PreferenceManager.getDefaultSharedPreferences(context))
+        assertEquals(context.defaultSharedPreferences,
+            PreferenceManager.getDefaultSharedPreferences(context))
     }
 }

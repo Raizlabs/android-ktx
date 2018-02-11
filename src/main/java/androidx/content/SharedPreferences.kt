@@ -43,7 +43,7 @@ inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
  *
  *  val pref = sharedPreferences.get<Int>([key]) or
  *
- *  val pref = sharedPreferences.get([key],[defaultValue])
+ *  val pref = sharedPreferences.get([key], [defaultValue])
  *
  *  val pref : Int = sharedPreferences[[key]]
  *
@@ -60,8 +60,8 @@ inline fun SharedPreferences.edit(action: SharedPreferences.Editor.() -> Unit) {
  * @throw [UnsupportedOperationException] if the preference type is not supported
  * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
  */
-inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T? =
-        when (T::class) {
+inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null):
+        T? = when (T::class) {
             String::class -> getString(key, defaultValue as? String) as? T
             Integer::class -> getInt(key, defaultValue as? Int ?: -1) as T
             Boolean::class -> getBoolean(key, defaultValue as? Boolean ?: false) as T
@@ -71,7 +71,8 @@ inline operator fun <reified T : Any> SharedPreferences.get(key: String, default
                 @Suppress("UNCHECKED_CAST")
                 getStringSet(key, defaultValue as? Set<String>) as? T
             }
-            else -> throw UnsupportedOperationException(T::class.java.simpleName +" is not supported  as preference type")
+            else -> throw UnsupportedOperationException(T::class.java.simpleName +
+                    " is not supported  as preference type")
         }
 
 /**
@@ -83,13 +84,13 @@ inline operator fun <reified T : Any> SharedPreferences.get(key: String, default
  *
  * sharedPreferences.set<Long>([key], [value]) or
  *
- * sharedPreferences.set([key],[value])
+ * sharedPreferences.set([key], [value])
  *
  * @throw [UnsupportedOperationException] if the preference type is not supported
  * @throw [ClassCastException] if a [Set] is specified and it's not a Set<String>
  */
 inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T) =
-        when (T::class) {
+    when (T::class) {
             String::class -> edit { putString(key, value as String) }
             Integer::class -> edit { putInt(key, value as Int) }
             Boolean::class -> edit { putBoolean(key, value as Boolean) }
@@ -99,5 +100,6 @@ inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: 
                 @Suppress("UNCHECKED_CAST")
                 edit { putStringSet(key, value as Set<String>) }
             }
-            else -> throw UnsupportedOperationException(T::class.java.simpleName +" is not supported  as preference type")
+            else -> throw UnsupportedOperationException(T::class.java.simpleName +
+                    " is not supported  as preference type")
         }
