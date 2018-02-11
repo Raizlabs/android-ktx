@@ -36,6 +36,13 @@ package androidx.content {
 
 package androidx.content.res {
 
+  public final class DisplayMetricsKt {
+    ctor public DisplayMetricsKt();
+    method public static final android.util.DisplayMetrics getDisplayMetrics();
+    method public static final int getHeightDp(android.util.DisplayMetrics);
+    method public static final int getWidthDp(android.util.DisplayMetrics);
+  }
+
   public final class TypedArrayKt {
     ctor public TypedArrayKt();
     method public static final boolean getBooleanOrThrow(android.content.res.TypedArray, @StyleableRes int index);
