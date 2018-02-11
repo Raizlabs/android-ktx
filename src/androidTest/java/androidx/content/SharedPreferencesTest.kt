@@ -65,7 +65,7 @@ class SharedPreferencesTest {
 
         val defaultValue = true
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
-        assertFalse(preferences["test_key2"]!!)
+        assertFalse(preferences["test_key2"])
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
         assertFalse(preferences.get("test_key4")!!)
     }

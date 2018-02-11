@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
-
 package androidx.content
 
 import android.annotation.SuppressLint
@@ -33,75 +31,121 @@ import android.content.SharedPreferences
  *
  * @see SharedPreferences.apply
  */
-inline fun SharedPreferences.edit(unit: SharedPreferences.Editor.() -> Unit) =
-    edit().apply(unit).apply()
+inline fun SharedPreferences.edit(unit: SharedPreferences.Editor.() -> Unit)
+        = edit().apply(unit).apply()
 
 /**
  *
  * @see SharedPreferences.commit
  */
 @SuppressLint("ApplySharedPref")
-inline fun SharedPreferences.commit(unit: SharedPreferences.Editor.() -> Unit) =
-    edit().apply(unit).commit()
+inline fun SharedPreferences.commit(unit: SharedPreferences.Editor.() -> Unit)
+        = edit().apply(unit).commit()
 
 /**
- * [SharedPreferences].[get] Kotlin Operator
  *
- * usages :
+ * @see SharedPreferences.getInt
+ */
+operator fun SharedPreferences.get(key: String, defaultValue: Int): Int =
+    getInt(key, defaultValue)
+
+/**
  *
- *  val pref : Int = sharedPreferences[[key]] or
+ * @see SharedPreferences.getFloat
+ */
+operator fun SharedPreferences.get(key: String, defaultValue: Float): Float =
+    getFloat(key, defaultValue)
+
+/**
  *
- *  val pref = sharedPreferences[[key], [defaultValue]] or
+ * @see SharedPreferences.getLong
+ */
+operator fun SharedPreferences.get(key: String, defaultValue: Long): Long =
+    getLong(key, defaultValue)
+
+/**
  *
- *  val pref = sharedPreferences.get<Int>([key])
+ * @see SharedPreferences.getBoolean
+ */
+operator fun SharedPreferences.get(key: String, defaultValue: Boolean): Boolean =
+    getBoolean(key, defaultValue)
+
+/**
  *
- * if [defaultValue] is not specified or null the following values will be used,
- * depending of the preference type
- *
- * String -> null
- * Integer -> -1
- * Boolean -> false
- * Float -> -1f
- * Long -> -1
- * Set<String> -> null
- *
- * @throw [UnsupportedOperationException] if the preference type is not supported
- * @throw [ClassCastException] if the specified [Set] isn't a [Set] of [String]
- * */
+ */
 inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null):
         T? = when (T::class) {
-            String::class -> getString(key, defaultValue as? String) as? T
-            Integer::class -> getInt(key, defaultValue as? Int ?: -1) as T
-            Boolean::class -> getBoolean(key, defaultValue as? Boolean ?: false) as T
-            Float::class -> getFloat(key, defaultValue as? Float ?: -1f) as T
-            Long::class -> getLong(key, defaultValue as? Long ?: -1) as T
-            Set::class -> {
-                @Suppress("UNCHECKED_CAST")
-                getStringSet(key, defaultValue as? Set<String>) as? T
-            }
-            else -> throw UnsupportedOperationException(T::class.java.simpleName +
-                    " is not supported as preference type")
-        }
+    String::class -> getString(key, defaultValue as? String) as? T
+    Set::class -> {
+        @Suppress("UNCHECKED_CAST")
+        getStringSet(key, defaultValue as? Set<String>) as? T
+    }
+    Integer::class -> {
+        if(contains(key))
+            if(defaultValue != null) getInt(key, defaultValue as Int) as T
+            else all[key] as? T ?: throw ClassCastException()
+        else defaultValue
+    }
+    Float::class -> {
+        if(contains(key))
+            if(defaultValue != null) getFloat(key, defaultValue as Float) as T
+            else all[key] as? T ?: throw ClassCastException()
+        else defaultValue
+    }
+    Long::class -> {
+        if(contains(key))
+            if(defaultValue != null) getLong(key, defaultValue as Long) as T
+            else all[key] as? T ?: throw ClassCastException()
+        else defaultValue
+    }
+    Boolean::class -> {
+        if(contains(key))
+            if(defaultValue != null) getBoolean(key, defaultValue as Boolean) as T
+            else all[key] as? T ?: throw ClassCastException()
+        else defaultValue
+    }
+    else -> throw UnsupportedOperationException(T::class.java.simpleName +
+            " is not supported as preference type")
+}
 
 /**
- * [SharedPreferences].[put] Kotlin Operator
  *
- * usage : sharedPreferences[[key]] = [value]
+ * @see SharedPreferences.Editor.putString
+ */
+operator fun SharedPreferences.set(key: String, value: String?) =
+    edit { putString(key, value) }
+
+/**
  *
- * @throw [UnsupportedOperationException] if the preference type is not supported
- * @throw [ClassCastException] if the specified [Set] isn't a [Set] of [String]
- * */
-inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T) =
-    when (T::class) {
-            String::class -> edit { putString(key, value as String) }
-            Integer::class -> edit { putInt(key, value as Int) }
-            Boolean::class -> edit { putBoolean(key, value as Boolean) }
-            Float::class -> edit { putFloat(key, value as Float) }
-            Long::class -> edit { putLong(key, value as Long) }
-            Set::class -> {
-                @Suppress("UNCHECKED_CAST")
-                edit { putStringSet(key, value as Set<String>) }
-            }
-            else -> throw UnsupportedOperationException(T::class.java.simpleName +
-                    " is not supported as preference type")
-    }
+ * @see SharedPreferences.Editor.putBoolean
+ */
+operator fun SharedPreferences.set(key: String, value: Boolean) =
+    edit { putBoolean(key, value) }
+
+/**
+ *
+ * @see SharedPreferences.Editor.putInt
+ */
+operator fun SharedPreferences.set(key: String, value: Int) =
+    edit { putInt(key, value) }
+
+/**
+ *
+ * @see SharedPreferences.Editor.putFloat
+ */
+operator fun SharedPreferences.set(key: String, value: Float) =
+    edit { putFloat(key, value) }
+
+/**
+ *
+ * @see SharedPreferences.Editor.putLong
+ */
+operator fun SharedPreferences.set(key: String, value: Long) =
+    edit { putLong(key, value) }
+
+/**
+ *
+ * @see SharedPreferences.Editor.putStringSet
+ */
+operator fun SharedPreferences.set(key: String, value: Set<String>?) =
+    edit { putStringSet(key, value) }
