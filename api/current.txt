@@ -14,6 +14,34 @@ package androidx.animation {
 
 }
 
+package androidx.app {
+
+  public final class ActivityKt {
+    ctor public ActivityKt();
+    method public static final int commit(android.app.Activity, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method public static final int commitAllowingStateLoss(android.app.Activity, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNow(android.app.Activity, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNowAllowingStateLoss(android.app.Activity, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+  }
+
+  public final class FragmentKt {
+    ctor public FragmentKt();
+    method public static final int commit(android.app.Fragment, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method public static final int commitAllowingStateLoss(android.app.Fragment, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNow(android.app.Fragment, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNowAllowingStateLoss(android.app.Fragment, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+  }
+
+  public final class FragmentManagerKt {
+    ctor public FragmentManagerKt();
+    method public static final int commit(android.app.FragmentManager, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method public static final int commitAllowingStateLoss(android.app.FragmentManager, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNow(android.app.FragmentManager, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+    method @RequiresApi(24) public static final error.NonExistentClass commitNowAllowingStateLoss(android.app.FragmentManager, kotlin.jvm.functions.Function1<? super android.app.FragmentTransaction,kotlin.Unit> unit = "{}");
+  }
+
+}
+
 package androidx.content {
 
   public final class ContentValuesKt {
