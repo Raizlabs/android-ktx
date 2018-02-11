@@ -25,14 +25,14 @@ import android.support.annotation.RequiresApi
  * Commit a fragment transaction
  * @see FragmentTransaction.commit
  */
-fun FragmentManager.commit(unit: FragmentTransaction.() -> Unit = {}) : Int =
+fun FragmentManager.commit(unit: FragmentTransaction.() -> Unit = {}): Int =
     beginTransaction().apply(unit).commit()
 
 /**
  * Commit a fragment transaction Allowing State Loss
  * @see FragmentTransaction.commitAllowingStateLoss
  */
-fun FragmentManager.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}) : Int =
+fun FragmentManager.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}): Int =
     beginTransaction().apply(unit).commitAllowingStateLoss()
 
 /**

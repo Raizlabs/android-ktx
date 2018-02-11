@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
-
 package androidx.app
 
 import android.app.Activity
@@ -27,14 +25,14 @@ import android.support.annotation.RequiresApi
  * Commit a fragment transaction
  * @see FragmentTransaction.commit
  */
-fun Activity.commit(unit: FragmentTransaction.() -> Unit = {}) : Int =
+fun Activity.commit(unit: FragmentTransaction.() -> Unit = {}): Int =
     fragmentManager.commit(unit)
 
 /**
  * Commit a fragment transaction Allowing State Loss
  * @see FragmentTransaction.commitAllowingStateLoss
  */
-fun Activity.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}) : Int =
+fun Activity.commitAllowingStateLoss(unit: FragmentTransaction.() -> Unit = {}): Int =
     fragmentManager.commitAllowingStateLoss(unit)
 
 /**
