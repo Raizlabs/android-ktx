@@ -30,7 +30,8 @@ package androidx.content {
 
   public final class SharedPreferencesKt {
     ctor public SharedPreferencesKt();
-    method public static final void edit(android.content.SharedPreferences, kotlin.jvm.functions.Function1<? super android.content.SharedPreferences.Editor,kotlin.Unit> action);
+    method public static final error.NonExistentClass commit(android.content.SharedPreferences, kotlin.jvm.functions.Function1<? super android.content.SharedPreferences.Editor,kotlin.Unit> unit);
+    method public static final error.NonExistentClass edit(android.content.SharedPreferences, kotlin.jvm.functions.Function1<? super android.content.SharedPreferences.Editor,kotlin.Unit> unit);
   }
 
 }
