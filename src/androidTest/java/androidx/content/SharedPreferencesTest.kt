@@ -17,8 +17,10 @@
 package androidx.content
 
 import android.support.test.InstrumentationRegistry
-import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SharedPreferencesTest {
@@ -50,9 +52,9 @@ class SharedPreferencesTest {
 
         val defaultValue = "default"
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
-        Assert.assertNull(preferences["test_key2"])
+        assertNull(preferences["test_key2"])
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
-        Assert.assertNull(preferences.get<String>("test_key4"))
+        assertNull(preferences.get<String>("test_key4"))
     }
 
     @Test fun getBoolean() {
@@ -60,23 +62,25 @@ class SharedPreferencesTest {
 
         val defaultValue = true
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
-        Assert.assertFalse(preferences["test_key2"]!!)
+        assertFalse(preferences["test_key2"]!!)
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
-        Assert.assertFalse(preferences.get("test_key4")!!)
+        assertFalse(preferences.get("test_key4")!!)
     }
 
     @Test fun getFloat() {
         val preferences = context.getSharedPreferences("prefs_float", 0)
         val defaultValue = 8f
+
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
         assertEquals(preferences["test_key2"], -1f)
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
-        //assertEquals(preferences.get<String>("test_key4"), -1f)
+        assertEquals(preferences.get<String>("test_key4"), -1f)
     }
 
     @Test fun getLong() {
         val preferences = context.getSharedPreferences("prefs_long", 0)
         val defaultValue: Long = 8978728734832743
+
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
         assertEquals(preferences["test_key2"]!!, -1)
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
@@ -88,9 +92,9 @@ class SharedPreferencesTest {
 
         val defaultValue = "default"
         assertEquals(preferences["test_key1", defaultValue], defaultValue)
-        Assert.assertNull(preferences["test_key2"])
+        assertNull(preferences["test_key2"])
         assertEquals(preferences.get("test_key3", defaultValue), defaultValue)
-        Assert.assertNull(preferences.get<String>("test_key4"))
+        assertNull(preferences.get<String>("test_key4"))
     }
 
     @Test fun setInteger() {
@@ -132,13 +136,13 @@ class SharedPreferencesTest {
         val defaultValue = false
 
         preferences["test_key1"] = value
-        Assert.assertTrue(preferences.getBoolean("test_key1", defaultValue))
+        assertTrue(preferences.getBoolean("test_key1", defaultValue))
 
         preferences.set("test_key2", value)
-        Assert.assertTrue(preferences.getBoolean("test_key1", defaultValue))
+        assertTrue(preferences.getBoolean("test_key1", defaultValue))
 
         preferences.set<Boolean>("test_key3", value)
-        Assert.assertTrue(preferences.getBoolean("test_key1", defaultValue))
+        assertTrue(preferences.getBoolean("test_key1", defaultValue))
     }
 
     @Test fun setFloat() {

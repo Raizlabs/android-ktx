@@ -22,8 +22,8 @@ import android.support.test.filters.SdkSuppress
 import android.test.mock.MockContext
 import androidx.getAttributeSet
 import androidx.kotlin.test.R
-import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -74,8 +74,9 @@ class ContextTest {
     }
 
     @Test fun defaultSharedPreferences() {
-        Assert.assertNotNull(context.defaultSharedPreferences)
-        assertEquals(context.defaultSharedPreferences,
+        val defaultSharedPreferences = context.defaultSharedPreferences
+        assertNotNull(defaultSharedPreferences)
+        assertEquals(defaultSharedPreferences,
             PreferenceManager.getDefaultSharedPreferences(context))
     }
 }
