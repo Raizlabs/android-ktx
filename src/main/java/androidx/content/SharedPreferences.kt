@@ -31,16 +31,16 @@ import android.content.SharedPreferences
  *
  * @see SharedPreferences.apply
  */
-inline fun SharedPreferences.edit(unit: SharedPreferences.Editor.() -> Unit)
-        = edit().apply(unit).apply()
+inline fun SharedPreferences.edit(unit: SharedPreferences.Editor.() -> Unit) =
+    edit().apply(unit).apply()
 
 /**
  *
  * @see SharedPreferences.commit
  */
 @SuppressLint("ApplySharedPref")
-inline fun SharedPreferences.commit(unit: SharedPreferences.Editor.() -> Unit)
-        = edit().apply(unit).commit()
+inline fun SharedPreferences.commit(unit: SharedPreferences.Editor.() -> Unit) =
+    edit().apply(unit).commit()
 
 /**
  *
@@ -75,38 +75,38 @@ operator fun SharedPreferences.get(key: String, defaultValue: Boolean): Boolean 
  */
 inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null):
         T? = when (T::class) {
-    String::class -> getString(key, defaultValue as? String) as? T
-    Set::class -> {
-        @Suppress("UNCHECKED_CAST")
-        getStringSet(key, defaultValue as? Set<String>) as? T
-    }
-    Integer::class -> {
-        if(contains(key))
-            if(defaultValue != null) getInt(key, defaultValue as Int) as T
-            else all[key] as? T ?: throw ClassCastException()
-        else defaultValue
-    }
-    Float::class -> {
-        if(contains(key))
-            if(defaultValue != null) getFloat(key, defaultValue as Float) as T
-            else all[key] as? T ?: throw ClassCastException()
-        else defaultValue
-    }
-    Long::class -> {
-        if(contains(key))
-            if(defaultValue != null) getLong(key, defaultValue as Long) as T
-            else all[key] as? T ?: throw ClassCastException()
-        else defaultValue
-    }
-    Boolean::class -> {
-        if(contains(key))
-            if(defaultValue != null) getBoolean(key, defaultValue as Boolean) as T
-            else all[key] as? T ?: throw ClassCastException()
-        else defaultValue
-    }
-    else -> throw UnsupportedOperationException(T::class.java.simpleName +
-            " is not supported as preference type")
-}
+                String::class -> getString(key, defaultValue as? String) as? T
+                Set::class -> {
+                    @Suppress("UNCHECKED_CAST")
+                    getStringSet(key, defaultValue as? Set<String>) as? T
+                }
+                Integer::class -> {
+                    if (contains(key))
+                        if (defaultValue != null) getInt(key, defaultValue as Int) as T
+                        else all[key] as? T ?: throw ClassCastException()
+                    else defaultValue
+                }
+                Float::class -> {
+                    if (contains(key))
+                        if (defaultValue != null) getFloat(key, defaultValue as Float) as T
+                        else all[key] as? T ?: throw ClassCastException()
+                    else defaultValue
+                }
+                Long::class -> {
+                    if (contains(key))
+                        if (defaultValue != null) getLong(key, defaultValue as Long) as T
+                        else all[key] as? T ?: throw ClassCastException()
+                    else defaultValue
+                }
+                Boolean::class -> {
+                    if (contains(key))
+                        if (defaultValue != null) getBoolean(key, defaultValue as Boolean) as T
+                        else all[key] as? T ?: throw ClassCastException()
+                    else defaultValue
+                }
+                else -> throw UnsupportedOperationException(T::class.java.simpleName +
+                        " is not supported as preference type")
+        }
 
 /**
  *
@@ -114,13 +114,6 @@ inline operator fun <reified T : Any> SharedPreferences.get(key: String, default
  */
 operator fun SharedPreferences.set(key: String, value: String?) =
     edit { putString(key, value) }
-
-/**
- *
- * @see SharedPreferences.Editor.putBoolean
- */
-operator fun SharedPreferences.set(key: String, value: Boolean) =
-    edit { putBoolean(key, value) }
 
 /**
  *
@@ -142,6 +135,13 @@ operator fun SharedPreferences.set(key: String, value: Float) =
  */
 operator fun SharedPreferences.set(key: String, value: Long) =
     edit { putLong(key, value) }
+
+/**
+ *
+ * @see SharedPreferences.Editor.putBoolean
+ */
+operator fun SharedPreferences.set(key: String, value: Boolean) =
+    edit { putBoolean(key, value) }
 
 /**
  *

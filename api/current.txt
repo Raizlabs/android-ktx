@@ -37,10 +37,10 @@ package androidx.content {
     method public static final operator long get(android.content.SharedPreferences, String key, long defaultValue);
     method public static final operator boolean get(android.content.SharedPreferences, String key, boolean defaultValue);
     method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, String? value);
-    method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, boolean value);
     method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, int value);
     method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, float value);
     method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, long value);
+    method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, boolean value);
     method public static final operator error.NonExistentClass set(android.content.SharedPreferences, String key, java.util.Set<String>? value);
   }
 
