@@ -16,12 +16,14 @@
 
 package androidx.content
 
+import android.preference.PreferenceManager
 import android.support.test.InstrumentationRegistry
 import android.support.test.filters.SdkSuppress
 import android.test.mock.MockContext
 import androidx.getAttributeSet
 import androidx.kotlin.test.R
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -69,5 +71,32 @@ class ContextTest {
         context.withStyledAttributes(attrs, R.styleable.SampleAttrs, 0, 0) {
             assertTrue(getInt(R.styleable.SampleAttrs_sample, -1) != -1)
         }
+    }
+
+    @Test fun defaultSharedPreferences() {
+        val defaultSharedPreferences = context.defaultSharedPreferences
+        assertNotNull(defaultSharedPreferences)
+        assertEquals(defaultSharedPreferences,
+            PreferenceManager.getDefaultSharedPreferences(context))
+
+        val value by context.bindSharedPreference("key", 3)
+    }
+
+    @Test fun bindIntPreference() {
+
+        val testKey1 = "testKey1"
+        val defaultValue = 2
+        val testValue = 4
+
+        var value by context.defaultSharedPreferences.property("testKey1", defaultValue)
+
+        var value2: String? by context.defaultSharedPreferences.property("testKey1")
+
+        var value3 by context.defaultSharedPreferences.property<Int>("testKey1")
+
+        assertEquals(value, defaultValue)
+        value = testValue
+        assertEquals(value, testValue)
+
     }
 }
