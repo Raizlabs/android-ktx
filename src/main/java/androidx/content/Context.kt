@@ -101,3 +101,7 @@ inline fun Context.withStyledAttributes(
  */
 val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
+
+fun Context.bindSharedPreference(key: String, defaultValue: Int) =
+    SharedPreferencesIntProperty(defaultSharedPreferences, key, defaultValue)
+

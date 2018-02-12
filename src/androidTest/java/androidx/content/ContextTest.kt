@@ -78,5 +78,25 @@ class ContextTest {
         assertNotNull(defaultSharedPreferences)
         assertEquals(defaultSharedPreferences,
             PreferenceManager.getDefaultSharedPreferences(context))
+
+        val value by context.bindSharedPreference("key", 3)
+    }
+
+    @Test fun bindIntPreference() {
+
+        val testKey1 = "testKey1"
+        val defaultValue = 2
+        val testValue = 4
+
+        var value by context.defaultSharedPreferences.property("testKey1", defaultValue)
+
+        var value2: String? by context.defaultSharedPreferences.property("testKey1")
+
+        var value3 by context.defaultSharedPreferences.property<Int>("testKey1")
+
+        assertEquals(value, defaultValue)
+        value = testValue
+        assertEquals(value, testValue)
+
     }
 }

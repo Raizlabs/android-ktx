@@ -17,9 +17,9 @@
 package androidx.content
 
 import android.support.test.InstrumentationRegistry
+import androidx.assertThrows
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -41,26 +41,10 @@ class SharedPreferencesTest {
         assertEquals(100, preferences.getInt("test_key2", 0))
     }
 
-    @Test fun commit() {
-        val preferences = context.getSharedPreferences("prefs_commit", 0)
-
-        val testKeyString = "test_key_string"
-        val testString = "test"
-
-        val testKeyInt = "test_key_int"
-        val defaultInt = 0
-        val testInt = 1
-
-        assertNotEquals(preferences.getString(testKeyString, null), testString)
-        assertNotEquals(preferences.getInt(testKeyInt, defaultInt), testInt)
-
-        preferences.commit {
-            putString(testKeyString, testKeyString)
-            putInt(testKeyInt, testInt)
-        }
-
-        assertEquals(preferences.getString(testKeyString, null), testString)
-        assertEquals(preferences.getInt(testKeyInt, defaultInt), testInt)
+    @Test fun delegate() {
+        val preferences = context.getSharedPreferences("unsupported", 0)
+        assertThrows<UnsupportedOperationException> { preferences.get<DummyObject>(" ") }
+        assertThrows<UnsupportedOperationException> { preferences[" ", DummyObject()] }
     }
 
     @Test fun getSharedPreferencesNonNullInteger() {
@@ -70,10 +54,8 @@ class SharedPreferencesTest {
         val defaultValue = 1
         val value = 2
         assertEquals(preferences[testKey, defaultValue], defaultValue)
-        assertEquals(preferences.get(testKey, defaultValue), defaultValue)
         preferences.edit().putInt(testKey, value).apply()
         assertEquals(preferences[testKey, defaultValue], value)
-        assertEquals(preferences.get(testKey, defaultValue), value)
     }
 
     @Test fun getSharedPreferencesNonNullFloat() {
@@ -83,10 +65,8 @@ class SharedPreferencesTest {
         val defaultValue = 1f
         val value = 2f
         assertEquals(preferences[testKey, defaultValue], defaultValue)
-        assertEquals(preferences.get(testKey, defaultValue), defaultValue)
         preferences.edit().putFloat(testKey, value).apply()
         assertEquals(preferences[testKey, defaultValue], value)
-        assertEquals(preferences.get(testKey, defaultValue), value)
     }
 
     @Test fun getSharedPreferencesNonNullLong() {
@@ -96,10 +76,8 @@ class SharedPreferencesTest {
         val defaultValue: Long = 1874287482374284
         val value: Long = 231231231312312312
         assertEquals(preferences[testKey, defaultValue], defaultValue)
-        assertEquals(preferences.get(testKey, defaultValue), defaultValue)
         preferences.edit().putLong(testKey, value).apply()
         assertEquals(preferences[testKey, defaultValue], value)
-        assertEquals(preferences.get(testKey, defaultValue), value)
     }
 
     @Test fun getSharedPreferencesNonNullBoolean() {
@@ -109,80 +87,130 @@ class SharedPreferencesTest {
         val defaultValue = false
         val value = true
         assertEquals(preferences[testKey, defaultValue], defaultValue)
-        assertEquals(preferences.get(testKey, defaultValue), defaultValue)
         preferences.edit().putBoolean(testKey, value).apply()
         assertEquals(preferences[testKey, defaultValue], value)
-        assertEquals(preferences.get(testKey, defaultValue), value)
     }
 
-    @Test fun getNullableSharedPreferences() {
+    @Test fun getSharedPreferencesNullableString() {
+
         val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyString = "test_key_string"
         val testString = "test"
         val defaultString = "default"
 
+        assertNull(preferences.get<String>(testKeyString))
         assertNull(preferences[testKeyString])
         assertEquals(preferences[testKeyString, defaultString], defaultString)
+
         preferences.edit().putString(testKeyString, testString).apply()
+
+        assertNotNull(preferences.get<String>(testKeyString))
         assertNotNull(preferences[testKeyString])
         assertEquals(preferences[testKeyString], testString)
         assertEquals(preferences[testKeyString, defaultString], testString)
+        assertEquals(preferences.get<String>(testKeyString), testString)
+
+    }
+
+    @Test fun getSharedPreferencesNullableInteger() {
+
+        /*val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyInteger = "test_key_integer"
         val testInteger = 1
         val defaultInteger = 0
 
-        assertNull(preferences[testKeyInteger])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyInteger])
+        }
         assertEquals(preferences[testKeyInteger, defaultInteger], defaultInteger)
         preferences.edit().putInt(testKeyInteger, testInteger).apply()
-        assertNotNull(preferences[testKeyInteger])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyInteger])
+        }
         assertEquals(preferences[testKeyInteger], testInteger)
-        assertEquals(preferences[testKeyInteger, defaultInteger], testInteger)
+        assertEquals(preferences[testKeyInteger, defaultInteger], testInteger)*/
+    }
+
+    @Test fun getSharedPreferencesNullableFloat() {
+
+        /*val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyFloat = "test_key_float"
         val testFloat = 1f
         val defaultFloat = 0f
 
-        assertNull(preferences[testKeyFloat])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyFloat])
+        }
         assertEquals(preferences[testKeyFloat, defaultFloat], defaultFloat)
         preferences.edit().putFloat(testKeyFloat, testFloat).apply()
-        assertNotNull(preferences[testKeyFloat])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyFloat])
+        }
         assertEquals(preferences[testKeyFloat], testFloat)
-        assertEquals(preferences[testKeyFloat, defaultFloat], testFloat)
+        assertEquals(preferences[testKeyFloat, defaultFloat], testFloat)*/
+    }
+
+    @Test fun getSharedPreferencesNullableLong() {
+
+        /*val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyLong = "test_key_long"
         val testLong: Long = 1234762378231647126
         val defaultLong: Long = 12126152
 
-        assertNull(preferences[testKeyLong])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyLong])
+        }
         assertEquals(preferences[testKeyLong, defaultLong], defaultLong)
         preferences.edit().putLong(testKeyLong, testLong).apply()
-        assertNotNull(preferences[testKeyLong])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyLong])
+        }
         assertEquals(preferences[testKeyLong]!!, testLong)
-        assertEquals(preferences[testKeyLong, defaultLong], testLong)
+        assertEquals(preferences[testKeyLong, defaultLong], testLong)*/
+    }
+
+    @Test fun getNullableBoolean() {
+
+        /*val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyBoolean = "test_key_boolean"
         val testBoolean = true
         val defaultBoolean = false
 
-        assertNull(preferences[testKeyBoolean])
+        assertThrows<UnsupportedOperationException> {
+            assertNull(preferences[testKeyBoolean])
+        }
         assertEquals(preferences[testKeyBoolean, defaultBoolean], defaultBoolean)
         preferences.edit().putBoolean(testKeyBoolean, testBoolean).apply()
-        assertNotNull(preferences[testKeyBoolean])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyBoolean])
+        }
         assertEquals(preferences[testKeyBoolean], testBoolean)
-        assertEquals(preferences[testKeyBoolean, defaultBoolean], testBoolean)
+        assertEquals(preferences[testKeyBoolean, defaultBoolean], testBoolean)*/
+    }
+
+    @Test fun getNullableStringSet() {
+
+        /*val preferences = context.getSharedPreferences("prefs_nullable", 0)
 
         val testKeyStringSet = "test_key_string_set"
         val testStringSet = setOf("test")
         val defaultStringSet = setOf("default")
 
-        assertNull(preferences[testKeyStringSet])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyStringSet])
+        }
         assertEquals(preferences[testKeyStringSet, defaultStringSet], defaultStringSet)
         preferences.edit().putStringSet(testKeyStringSet, testStringSet).apply()
-        assertNotNull(preferences[testKeyStringSet])
+        assertThrows<UnsupportedOperationException>{
+            assertNull(preferences[testKeyStringSet])
+        }
         assertEquals(preferences[testKeyStringSet], testStringSet)
-        assertEquals(preferences[testKeyStringSet, defaultStringSet], testStringSet)
+        assertEquals(preferences[testKeyStringSet, defaultStringSet], testStringSet)*/
     }
 
     @Test fun setSharedPreferencesString() {
@@ -199,7 +227,7 @@ class SharedPreferencesTest {
         assertEquals(preferences.getString(testKey, defaultValue), value)
     }
 
-    @Test fun setSharedPreferencesInteger() {
+    @Test fun setInteger() {
         val preferences = context.getSharedPreferences("prefs_set_integer", 0)
 
         val testKey = "test_key"
@@ -211,7 +239,7 @@ class SharedPreferencesTest {
         assertEquals(preferences.getInt(testKey, defaultValue), value)
     }
 
-    @Test fun setSharedPreferencesFloat() {
+    @Test fun setFloat() {
         val preferences = context.getSharedPreferences("prefs_set_float", 0)
 
         val testKey = "test_key"
@@ -223,7 +251,7 @@ class SharedPreferencesTest {
         assertEquals(preferences.getFloat(testKey, defaultValue), value)
     }
 
-    @Test fun setSharedPreferencesLong() {
+    @Test fun setLong() {
         val preferences = context.getSharedPreferences("prefs_set_long", 0)
 
         val testKey = "test_key"
@@ -235,7 +263,7 @@ class SharedPreferencesTest {
         assertEquals(preferences.getLong(testKey, defaultValue), value)
     }
 
-    @Test fun setSharedPreferencesBoolean() {
+    @Test fun setBoolean() {
         val preferences = context.getSharedPreferences("prefs_set_boolean", 0)
 
         val testKey = "test_key"
@@ -247,7 +275,7 @@ class SharedPreferencesTest {
         assertTrue(preferences.getBoolean(testKey, value))
     }
 
-    @Test fun setSharedPreferencesStringSet() {
+    @Test fun setStringSet() {
         val preferences = context.getSharedPreferences("prefs_set_string_set", 0)
 
         val testKey = "test_key"
@@ -259,4 +287,12 @@ class SharedPreferencesTest {
         preferences[testKey] = value
         assertEquals(preferences.getStringSet(testKey, defaultValue), value)
     }
+
+    @Test fun getUnsupportedClasses() {
+        val preferences = context.getSharedPreferences("unsupported", 0)
+        assertThrows<UnsupportedOperationException> { preferences.get<DummyObject>(" ") }
+        assertThrows<UnsupportedOperationException> { preferences[" ", DummyObject()] }
+    }
+
+    private class DummyObject
 }
