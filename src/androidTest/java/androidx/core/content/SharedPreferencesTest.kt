@@ -19,6 +19,7 @@ package androidx.core.content
 import android.support.test.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.util.Arrays
 
 class SharedPreferencesTest {
 
@@ -68,6 +69,13 @@ class SharedPreferencesTest {
         assertEquals("test_value", preferences[String::class.java, "test_key5", "test_value"])
         preferences.edit { putString("test_key5", "test") }
         assertEquals("test", preferences[String::class.java, "test_key5", "default"])
+
+        val defaultSet = HashSet<String>(Arrays.asList("1", "2"))
+        val testSet = HashSet<String>(Arrays.asList("3", "4"))
+
+        assertEquals(defaultSet, preferences[Set::class.java, "test_key6", defaultSet])
+        preferences.edit { putStringSet("test_key6", testSet) }
+        assertEquals(testSet, preferences[Set::class.java, "test_key6", defaultSet])
     }
 
     @Test fun setOperator() {
@@ -92,6 +100,13 @@ class SharedPreferencesTest {
         assertEquals("default", preferences.getString("test_key5", "default"))
         preferences[String::class.java, "test_key5"] = "test_value"
         assertEquals("test_value", preferences.getString("test_key5", "default"))
+
+        val defaultSet = HashSet<String>(Arrays.asList("1", "2"))
+        val testSet = HashSet<String>(Arrays.asList("3", "4"))
+
+        assertEquals(defaultSet, preferences.getStringSet("test_key6", defaultSet))
+        preferences[Set::class.java, "test_key6"] = testSet
+        assertEquals(testSet, preferences.getStringSet("test_key6", defaultSet))
     }
 
     @Test fun getInlinedOperator() {
@@ -116,6 +131,13 @@ class SharedPreferencesTest {
         assertEquals("default", preferences["test_key5", "default"])
         preferences.edit { putString("test_key5", "test") }
         assertEquals("test", preferences["test_key5", "default"])
+
+        val defaultSet = HashSet<String>(Arrays.asList("1", "2"))
+        val testSet = HashSet<String>(Arrays.asList("3", "4"))
+
+        assertEquals(defaultSet, preferences["test_key6", defaultSet])
+        preferences.edit { putStringSet("test_key6", testSet) }
+        assertEquals(testSet, preferences["test_key6", defaultSet])
     }
 
     @Test fun setInlinedOperator() {
@@ -140,5 +162,12 @@ class SharedPreferencesTest {
         assertEquals("default", preferences.getString("test_key5", "default"))
         preferences["test_key5"] = "test_value"
         assertEquals("test_value", preferences.getString("test_key5", "default"))
+
+        val defaultSet = HashSet<String>(Arrays.asList("1", "2"))
+        val testSet = HashSet<String>(Arrays.asList("3", "4"))
+
+        assertEquals(defaultSet, preferences.getStringSet("test_key6", defaultSet))
+        preferences["test_key6"] = testSet
+        assertEquals(testSet, preferences.getStringSet("test_key6", defaultSet))
     }
 }
