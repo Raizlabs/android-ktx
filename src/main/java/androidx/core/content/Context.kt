@@ -17,7 +17,15 @@
 package androidx.core.content
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.TypedArray
+import android.preference.PreferenceManager
+import android.support.annotation.AttrRes
+import android.support.annotation.RequiresApi
+import android.support.annotation.StyleRes
+import android.util.AttributeSet
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.RequiresApi
@@ -90,4 +98,28 @@ inline fun Context.withStyledAttributes(
     } finally {
         typedArray.recycle()
     }
+}
+
+/**
+ *  Bind a [SharedPreferencesProperty] from this context.
+ *
+ *
+ */
+inline fun <reified T : Any> Context.bindPreference(
+    key: String,
+    defaultValue: T? = null,
+    name: String? = null,
+    mode: Int = Context.MODE_PRIVATE
+): SharedPreferencesProperty<T> =
+    SharedPreferencesProperty(this, name, mode, key, defaultValue, T::class.java)
+
+
+fun Context.bindSharedPreferences(
+    name: String? = null,
+    mode: Int = Context.MODE_PRIVATE
+): ReadOnlyProperty<Context, SharedPreferences> =
+    object : ReadOnlyProperty<Any, SharedPreferences> {
+        override fun getValue(thisRef: Any, property: KProperty<*>): SharedPreferences =
+            if (name != null) getSharedPreferences(name, mode)
+            else PreferenceManager.getDefaultSharedPreferences(this)
 }

@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE") // Aliases to public API.
+package androidx.core.app
 
-package androidx.core.text
+import android.app.Activity
+import androidx.core.content.SharedPreferencesProperty
+import androidx.core.content.bindPreference
 
-import android.text.TextUtils
-
-/**
- * Returns whether the given [CharSequence] contains only digits.
- *
- * @see TextUtils.isDigitsOnly
- */
-inline fun CharSequence.isDigitsOnly() = TextUtils.isDigitsOnly(this)
-
-/**
- * Returns the length that the specified [CharSequence] would have if spaces and ASCII control
- * characters were trimmed from the start and end, as by [String.trim].
- *
- * @see TextUtils.getTrimmedLength
- */
-inline fun CharSequence.trimmedLength() = TextUtils.getTrimmedLength(this)
+inline fun <reified T : Any> Activity.bindPreference(key: String, defaultValue: T? = null):
+        SharedPreferencesProperty<T> = bindPreference(key, defaultValue, localClassName)
