@@ -48,44 +48,34 @@ class SharedPreferencesPropertyTest {
     val STRING_PREFERENCE_TEST_VALUE = "test"
     val STRING_SET_PREFERENCE_TEST_VALUE = "default"
 
-    private var integerPreference by context.bindSharedPreference(
-        INTEGER_PREFERENCE_KEY,
+    private var integerPreference by context.bindPreference(INTEGER_PREFERENCE_KEY,
         INTEGER_PREFERENCE_DEFAULT_VALUE)
 
-    private var booleanPreference by context.bindSharedPreference(
-        BOOLEAN_PREFERENCE_KEY,
+    private var booleanPreference by context.bindPreference(BOOLEAN_PREFERENCE_KEY,
         BOOLEAN_PREFERENCE_DEFAULT_VALUE)
 
-    private var floatPreference by context.bindSharedPreference(
-        FLOAT_PREFERENCE_KEY,
+    private var floatPreference by context.bindPreference(FLOAT_PREFERENCE_KEY,
         FLOAT_PREFERENCE_DEFAULT_VALUE)
 
-    private var longPreference by context.bindSharedPreference(
-        LONG_PREFERENCE_KEY,
+    private var longPreference by context.bindPreference(LONG_PREFERENCE_KEY,
         LONG_PREFERENCE_DEFAULT_VALUE)
 
-    private var stringPreference by context.bindSharedPreference(
-        STRING_PREFERENCE_KEY,
+    private var stringPreference by context.bindPreference(STRING_PREFERENCE_KEY,
         STRING_PREFERENCE_DEFAULT_VALUE)
 
-    private var stringSetPreference by context.bindSharedPreference(
-        STRING_SET_PREFERENCE_KEY,
+    private var stringSetPreference by context.bindPreference(STRING_SET_PREFERENCE_KEY,
         STRING_SET_PREFERENCE_DEFAULT_VALUE)
 
-    private var unsupportedPreference by context.bindSharedPreference(
-        "unsupported", context)
+    private var unsupportedPreference by context.bindPreference("unsupported", context)
 
-    private var nullBooleanPreference by context.bindSharedPreference<Boolean>(
-        "boolean", null)
+    private var nullBooleanPreference by context.bindPreference<Boolean>("boolean",
+        null)
 
-    private var nullFloatPreference by context.bindSharedPreference<Float>(
-        "float", null)
+    private var nullFloatPreference by context.bindPreference<Float>("float", null)
 
-    private var nullIntegerPreference by context.bindSharedPreference<Int>(
-        "int", null)
+    private var nullIntegerPreference by context.bindPreference<Int>("int", null)
 
-    private var nullLongPreference by context.bindSharedPreference<Long>(
-        "long", null)
+    private var nullLongPreference by context.bindPreference<Long>("long", null)
 
     @Test fun bindIntegerPreference() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)

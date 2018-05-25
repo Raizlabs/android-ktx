@@ -18,7 +18,7 @@ package androidx.core.app
 
 import android.app.Activity
 import androidx.core.content.SharedPreferencesProperty
-import androidx.core.content.bindSharedPreference
+import androidx.core.content.bindPreference
 
 inline fun <reified T : Any> Activity.bindPreference(key: String, defaultValue: T? = null):
-        SharedPreferencesProperty<T> = bindSharedPreference(key, defaultValue, localClassName)
+        SharedPreferencesProperty<T> = bindPreference(key, defaultValue, localClassName)
