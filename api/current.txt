@@ -23,13 +23,15 @@ package androidx.core.content {
 
   public final class ContextKt {
     ctor public ContextKt();
-    method public static void withStyledAttributes(android.content.Context, android.util.AttributeSet? set = "null", int[] attrs, @AttrRes int defStyleAttr = "0", @StyleRes int defStyleRes = "0", kotlin.jvm.functions.Function1<? super android.content.res.TypedArray,kotlin.Unit> block);
-    method public static void withStyledAttributes(android.content.Context, @StyleRes int resourceId, int[] attrs, kotlin.jvm.functions.Function1<? super android.content.res.TypedArray,kotlin.Unit> block);
+    method public static void withStyledAttributes(android.content.Context, android.util.AttributeSet? set = "null", int[] attrs, int defStyleAttr = "0", int defStyleRes = "0", kotlin.jvm.functions.Function1<? super android.content.res.TypedArray,kotlin.Unit> block);
+    method public static void withStyledAttributes(android.content.Context, int resourceId, int[] attrs, kotlin.jvm.functions.Function1<? super android.content.res.TypedArray,kotlin.Unit> block);
   }
 
   public final class SharedPreferencesKt {
     ctor public SharedPreferencesKt();
     method public static void edit(android.content.SharedPreferences, boolean commit = "false", kotlin.jvm.functions.Function1<? super android.content.SharedPreferences.Editor,kotlin.Unit> action);
+    method public static operator <T> T? get(android.content.SharedPreferences, Class<T> clazz, String key, T? defaultValue = "null");
+    method public static operator <T> void set(android.content.SharedPreferences, Class<T> clazz, String key, T? value);
   }
 
 }
