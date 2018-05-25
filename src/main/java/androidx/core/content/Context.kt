@@ -26,6 +26,10 @@ import android.support.annotation.StyleRes
 import android.util.AttributeSet
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
+import android.util.AttributeSet
+import androidx.annotation.AttrRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StyleRes
 
 /**
  * Return the handle to a system-level service by class.
